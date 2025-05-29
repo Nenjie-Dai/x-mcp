@@ -1,0 +1,51 @@
+name: Releases
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # バージョン更新とプッシュのために、トークンを使ってチェックアウトする
+          token: ${{ secrets.PA_TOKEN }} 
+          
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3.7.1
+        with:
+          github-token: ${{ secrets.PA_TOKEN }}
+          version-file: './package.json,./package-lock.json'
+
+      - name: Update package.json version
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        run: |
+          NEW_VERSION=${{ steps.changelog.outputs.tag }}
+          # 'v'プレフィックスを削除（npm versionは通常'v'を付けないため）
+          CLEAN_VERSION=${NEW_VERSION#v}
+          # npm versionコマンドでpackage.jsonを更新し、コミットとタグを作成
+          # --no-git-tag-version: npm versionが自動でタグを作成するのを防ぐ
+          # --allow-same-version: 同じバージョンでもエラーにしない（念のため）
+          npm version $CLEAN_VERSION --no-git-tag-version --allow-same-version
+
+      - name: Commit and Push version update
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json # package-lock.jsonも更新される可能性があるので追加
+          git commit -m "chore(release): update version to ${{ steps.changelog.outputs.tag }}"
+          git push origin main # 更新されたpackage.jsonをmainブランチにプッシュ
+
+      - name: create release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.PA_TOKEN }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}

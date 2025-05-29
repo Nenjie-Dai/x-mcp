@@ -1,0 +1,19 @@
+{
+  "name": "@nanjie-dai/x-mcp",
+  "version": "0.0.0",
+  "description": "ツイート取得とツイート投稿が可能な簡単なMCP",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nenjie-Dai/x-mcp.git"
+  },
+  "author": "Nanjie Dai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nenjie-Dai/x-mcp/issues"
+  },
+  "homepage": "https://github.com/Nenjie-Dai/x-mcp#readme"
+}
