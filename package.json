@@ -1,6 +1,6 @@
 {
   "name": "@nanjie-dai/x-mcp",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "ツイート取得とツイート投稿が可能な簡単なMCP",
   "main": "build/index.js",
   "bin": {
