@@ -3,7 +3,12 @@
   "version": "0.0.0",
   "description": "ツイート取得とツイート投稿が可能な簡単なMCP",
   "main": "build/index.js",
+  "bin": {
+    "twitter-server": "./build/index.js"
+  },
   "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +20,15 @@
   "bugs": {
     "url": "https://github.com/Nenjie-Dai/x-mcp/issues"
   },
-  "homepage": "https://github.com/Nenjie-Dai/x-mcp#readme"
+  "homepage": "https://github.com/Nenjie-Dai/x-mcp#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "dotenv": "^16.5.0",
+    "twitter-api-v2": "^1.23.2",
+    "zod": "^3.25.51"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "typescript": "^5.8.3"
+  }
 }
