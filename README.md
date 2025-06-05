@@ -5,7 +5,7 @@
   "mcpServers": {
     "twitter-mcp": {
       "command": "npx",
-      "args": ["-y", "@enescinar/twitter-mcp"],
+      "args": ["-y", "@nanjie-dai/x-mcp"],
       "env": {
         "API_KEY": "your_api_key_here",
         "API_SECRET_KEY": "your_api_secret_key_here",
